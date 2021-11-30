@@ -1,0 +1,9 @@
+name: atmos_binary_buffer
+version: 0.0.1
+
+environment:
+  sdk: '>=2.14.4 <3.0.0'
+
+dev_dependencies:
+  atmos_lints:
+    path: ../atmos_lints
