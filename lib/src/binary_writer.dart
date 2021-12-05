@@ -6,14 +6,14 @@ import 'dart:typed_data';
 import 'utils.dart';
 
 ///
-class AtmosBinaryWriter implements BytesBuilder {
+class BinaryWriter implements BytesBuilder {
   ///
-  factory AtmosBinaryWriter() => AtmosBinaryWriter._(_emptyList);
+  factory BinaryWriter() => BinaryWriter._(_emptyList);
 
   ///
-  factory AtmosBinaryWriter.withBuffer(Uint8List buffer) = AtmosBinaryWriter._;
+  factory BinaryWriter.withBuffer(Uint8List buffer) = BinaryWriter._;
 
-  AtmosBinaryWriter._(this._buffer);
+  BinaryWriter._(this._buffer);
 
   /// Начальный размер буффера
   static const int _initSize = 1024;
@@ -138,7 +138,7 @@ class AtmosBinaryWriter implements BytesBuilder {
   /// * [csz] - задаёт размер данных о длине (игнорируется если задана [size])
   /// * [size] - задаёт количество считываемых элементов, если известно
   void writeList<T>(
-      List<T> val, void Function(T val, int i, AtmosBinaryWriter writer) func,
+      List<T> val, void Function(T val, int i, BinaryWriter writer) func,
       {int csz = 0, int? size}) {
     final _l = size ?? writeSize(val.length, csz);
     for (var i = 0; i < _l; i++) {
@@ -248,7 +248,7 @@ class AtmosBinaryWriter implements BytesBuilder {
   @pragma('dart2js:tryInline')
   void writeListUint64(List<int> val, {int csz = 0, int? size}) =>
       writeList(val, _listWriteterUint64, csz: csz, size: size);
-  static void _listWriteterUint64(int val, int i, AtmosBinaryWriter writer) =>
+  static void _listWriteterUint64(int val, int i, BinaryWriter writer) =>
       writer.writeUint64(val);
 
   ///
@@ -256,7 +256,7 @@ class AtmosBinaryWriter implements BytesBuilder {
   @pragma('dart2js:tryInline')
   void writeListUint32(List<int> val, {int csz = 0, int? size}) =>
       writeList(val, _listWriteterUint32, csz: csz, size: size);
-  static void _listWriteterUint32(int val, int i, AtmosBinaryWriter writer) =>
+  static void _listWriteterUint32(int val, int i, BinaryWriter writer) =>
       writer.writeUint32(val);
 
   ///
@@ -264,7 +264,7 @@ class AtmosBinaryWriter implements BytesBuilder {
   @pragma('dart2js:tryInline')
   void writeListUint16(List<int> val, {int csz = 0, int? size}) =>
       writeList(val, _listWriteterUint16, csz: csz, size: size);
-  static void _listWriteterUint16(int val, int i, AtmosBinaryWriter writer) =>
+  static void _listWriteterUint16(int val, int i, BinaryWriter writer) =>
       writer.writeUint16(val);
 
   ///
@@ -272,7 +272,7 @@ class AtmosBinaryWriter implements BytesBuilder {
   @pragma('dart2js:tryInline')
   void writeListInt64(List<int> val, {int csz = 0, int? size}) =>
       writeList(val, _listWriteterInt64, csz: csz, size: size);
-  static void _listWriteterInt64(int val, int i, AtmosBinaryWriter writer) =>
+  static void _listWriteterInt64(int val, int i, BinaryWriter writer) =>
       writer.writeInt64(val);
 
   ///
@@ -280,7 +280,7 @@ class AtmosBinaryWriter implements BytesBuilder {
   @pragma('dart2js:tryInline')
   void writeListInt32(List<int> val, {int csz = 0, int? size}) =>
       writeList(val, _listWriteterInt32, csz: csz, size: size);
-  static void _listWriteterInt32(int val, int i, AtmosBinaryWriter writer) =>
+  static void _listWriteterInt32(int val, int i, BinaryWriter writer) =>
       writer.writeInt32(val);
 
   ///
@@ -288,7 +288,7 @@ class AtmosBinaryWriter implements BytesBuilder {
   @pragma('dart2js:tryInline')
   void writeListInt16(List<int> val, {int csz = 0, int? size}) =>
       writeList(val, _listWriteterInt16, csz: csz, size: size);
-  static void _listWriteterInt16(int val, int i, AtmosBinaryWriter writer) =>
+  static void _listWriteterInt16(int val, int i, BinaryWriter writer) =>
       writer.writeInt16(val);
 
   ///
@@ -296,8 +296,7 @@ class AtmosBinaryWriter implements BytesBuilder {
   @pragma('dart2js:tryInline')
   void writeListFloat64(List<double> val, {int csz = 0, int? size}) =>
       writeList(val, _listWriteterFloat64, csz: csz, size: size);
-  static void _listWriteterFloat64(
-          double val, int i, AtmosBinaryWriter writer) =>
+  static void _listWriteterFloat64(double val, int i, BinaryWriter writer) =>
       writer.writeFloat64(val);
 
   ///
@@ -305,8 +304,7 @@ class AtmosBinaryWriter implements BytesBuilder {
   @pragma('dart2js:tryInline')
   void writeListFloat32(List<double> val, {int csz = 0, int? size}) =>
       writeList(val, _listWriteterFloat32, csz: csz, size: size);
-  static void _listWriteterFloat32(
-          double val, int i, AtmosBinaryWriter writer) =>
+  static void _listWriteterFloat32(double val, int i, BinaryWriter writer) =>
       writer.writeFloat32(val);
 
   ///

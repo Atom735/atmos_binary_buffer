@@ -5,11 +5,11 @@ import 'dart:typed_data';
 import 'utils.dart';
 
 ///
-class AtmosBinaryReader {
+class BinaryReader {
   /// Создаёт ридер для чтения байтового буффера переданного в [buffer]
-  factory AtmosBinaryReader(Uint8List buffer) = AtmosBinaryReader._;
+  factory BinaryReader(Uint8List buffer) = BinaryReader._;
 
-  AtmosBinaryReader._(this._buffer)
+  BinaryReader._(this._buffer)
       : _byteData = ByteData.view(_buffer.buffer, _buffer.offsetInBytes);
 
   /// Количество считанных байт в буффере
@@ -195,58 +195,56 @@ class AtmosBinaryReader {
   @pragma('dart2js:tryInline')
   List<int> readListUint16({int csz = 0, int? size}) =>
       readList(_listReaderUint16, csz: csz, size: size);
-  static int _listReaderUint16(int i, AtmosBinaryReader m) => m.readUint16();
+  static int _listReaderUint16(int i, BinaryReader m) => m.readUint16();
 
   ///
   @pragma('vm:prefer-inline')
   @pragma('dart2js:tryInline')
   List<int> readListInt16({int csz = 0, int? size}) =>
       readList(_listReaderInt16, csz: csz, size: size);
-  static int _listReaderInt16(int i, AtmosBinaryReader m) => m.readInt16();
+  static int _listReaderInt16(int i, BinaryReader m) => m.readInt16();
 
   ///
   @pragma('vm:prefer-inline')
   @pragma('dart2js:tryInline')
   List<int> readListUint32({int csz = 0, int? size}) =>
       readList(_listReaderUint32, csz: csz, size: size);
-  static int _listReaderUint32(int i, AtmosBinaryReader m) => m.readUint32();
+  static int _listReaderUint32(int i, BinaryReader m) => m.readUint32();
 
   ///
   @pragma('vm:prefer-inline')
   @pragma('dart2js:tryInline')
   List<int> readListInt32({int csz = 0, int? size}) =>
       readList(_listReaderInt32, csz: csz, size: size);
-  static int _listReaderInt32(int i, AtmosBinaryReader m) => m.readInt32();
+  static int _listReaderInt32(int i, BinaryReader m) => m.readInt32();
 
   ///
   @pragma('vm:prefer-inline')
   @pragma('dart2js:tryInline')
   List<int> readListUint64({int csz = 0, int? size}) =>
       readList(_listReaderUint64, csz: csz, size: size);
-  static int _listReaderUint64(int i, AtmosBinaryReader m) => m.readUint64();
+  static int _listReaderUint64(int i, BinaryReader m) => m.readUint64();
 
   ///
   @pragma('vm:prefer-inline')
   @pragma('dart2js:tryInline')
   List<int> readListInt64({int csz = 0, int? size}) =>
       readList(_listReaderInt64, csz: csz, size: size);
-  static int _listReaderInt64(int i, AtmosBinaryReader m) => m.readInt64();
+  static int _listReaderInt64(int i, BinaryReader m) => m.readInt64();
 
   ///
   @pragma('vm:prefer-inline')
   @pragma('dart2js:tryInline')
   List<double> readListFloat32({int csz = 0, int? size}) =>
       readList(_listReaderFloat32, csz: csz, size: size);
-  static double _listReaderFloat32(int i, AtmosBinaryReader m) =>
-      m.readFloat32();
+  static double _listReaderFloat32(int i, BinaryReader m) => m.readFloat32();
 
   ///
   @pragma('vm:prefer-inline')
   @pragma('dart2js:tryInline')
   List<double> readListFloat64({int csz = 0, int? size}) =>
       readList(_listReaderFloat64, csz: csz, size: size);
-  static double _listReaderFloat64(int i, AtmosBinaryReader m) =>
-      m.readFloat64();
+  static double _listReaderFloat64(int i, BinaryReader m) => m.readFloat64();
 
   /// Функция чтения списка объектов, где на каждый объект вызывается [func]
   /// * [csz] - задаёт размер данных о длине (игнорируется если задана [size])
@@ -254,7 +252,7 @@ class AtmosBinaryReader {
   @pragma('vm:prefer-inline')
   @pragma('dart2js:tryInline')
   List<T> readList<T>(
-    T Function(int i, AtmosBinaryReader reader) func, {
+    T Function(int i, BinaryReader reader) func, {
     int csz = 0,
     int? size,
   }) {
