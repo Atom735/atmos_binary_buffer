@@ -1,5 +1,9 @@
 # Changes
 
+## 0.16.2
+
+- fixed README
+
 ## 0.16.1
 
 - Set last Dart SDK (2.16.1) dependecy
