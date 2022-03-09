@@ -3,12 +3,12 @@
 ## instal
 
 ```yaml
-dev_dependencies:
+dependencies:
   atmos_binary_buffer: ^0.16.1
 ```
 
-## analysis_options.yaml
+## import
 
 ```yaml
-include: package:atmos_lints/lints.yaml
+include: package:atmos_binary_buffer/atmos_binary_buffer.yaml
 ```
