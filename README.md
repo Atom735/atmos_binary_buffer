@@ -1,7 +1,14 @@
-# install
+# Atmos Binary Buffer Package
+
+## instal
 
 ```yaml
-dependencies:
-  atmos_binary_buffer:
-    git: git@github.com:Atom735/atmos_binary_buffer.git
+dev_dependencies:
+  atmos_binary_buffer: ^0.16.1
+```
+
+## analysis_options.yaml
+
+```yaml
+include: package:atmos_lints/lints.yaml
 ```

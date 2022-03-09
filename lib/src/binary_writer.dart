@@ -1,11 +1,9 @@
 import 'dart:convert';
-import 'dart:io';
-
 import 'dart:typed_data';
 
 import 'utils.dart';
 
-///
+/// Binary buffer writer, for write new data to buffer and take result.
 class BinaryWriter implements BytesBuilder {
   ///
   factory BinaryWriter() => BinaryWriter._(_emptyList);
@@ -140,90 +138,90 @@ class BinaryWriter implements BytesBuilder {
   void writeList<T>(
       List<T> val, void Function(T val, int i, BinaryWriter writer) func,
       {int csz = 0, int? size}) {
-    final _l = size ?? writeSize(val.length, csz);
-    for (var i = 0; i < _l; i++) {
+    final l = size ?? writeSize(val.length, csz);
+    for (var i = 0; i < l; i++) {
       func(val[i], i, this);
     }
   }
 
   /// {@macro atmos.binnaryWriter.av}
   void writeListFloat32AV(List<double> val, {int csz = 0, int? size}) {
-    final _l = size ?? writeSize(val.length, csz);
-    if (_l == 0) return;
+    final l = size ?? writeSize(val.length, csz);
+    if (l == 0) return;
     align(4);
-    _reserveBytes(_l * 4);
+    _reserveBytes(l * 4);
     Float32List.view(_buffer.buffer, _length).setAll(0, val);
-    _length += _l * 4;
+    _length += l * 4;
   }
 
   /// {@macro atmos.binnaryWriter.av}
   void writeListFloat64AV(List<double> val, {int csz = 0, int? size}) {
-    final _l = size ?? writeSize(val.length, csz);
-    if (_l == 0) return;
+    final l = size ?? writeSize(val.length, csz);
+    if (l == 0) return;
     align(8);
-    _reserveBytes(_l * 8);
+    _reserveBytes(l * 8);
     Float64List.view(_buffer.buffer, _length).setAll(0, val);
-    _length += _l * 8;
+    _length += l * 8;
   }
 
   /// {@macro atmos.binnaryWriter.av}
   void writeListInt16AV(List<int> val, {int csz = 0, int? size}) {
-    final _l = size ?? writeSize(val.length, csz);
-    if (_l == 0) return;
+    final l = size ?? writeSize(val.length, csz);
+    if (l == 0) return;
     align(2);
-    _reserveBytes(_l * 2);
+    _reserveBytes(l * 2);
     Int16List.view(_buffer.buffer, _length).setAll(0, val);
-    _length += _l * 2;
+    _length += l * 2;
   }
 
   /// {@macro atmos.binnaryWriter.av}
   void writeListInt32AV(List<int> val, {int csz = 0, int? size}) {
-    final _l = size ?? writeSize(val.length, csz);
-    if (_l == 0) return;
+    final l = size ?? writeSize(val.length, csz);
+    if (l == 0) return;
     align(4);
-    _reserveBytes(_l * 4);
+    _reserveBytes(l * 4);
     Int32List.view(_buffer.buffer, _length).setAll(0, val);
-    _length += _l * 4;
+    _length += l * 4;
   }
 
   /// {@macro atmos.binnaryWriter.av}
   void writeListInt64AV(List<int> val, {int csz = 0, int? size}) {
-    final _l = size ?? writeSize(val.length, csz);
-    if (_l == 0) return;
+    final l = size ?? writeSize(val.length, csz);
+    if (l == 0) return;
     align(8);
-    _reserveBytes(_l * 8);
+    _reserveBytes(l * 8);
     Int64List.view(_buffer.buffer, _length).setAll(0, val);
-    _length += _l * 8;
+    _length += l * 8;
   }
 
   ///
   void writeListInt8(List<int> val, {int csz = 0, int? size}) {
-    final _l = size ?? writeSize(val.length, csz);
-    if (_l == 0) return;
+    final l = size ?? writeSize(val.length, csz);
+    if (l == 0) return;
     align(1);
-    _reserveBytes(_l * 1);
+    _reserveBytes(l * 1);
     Int8List.view(_buffer.buffer, _length).setAll(0, val);
-    _length += _l * 1;
+    _length += l * 1;
   }
 
   /// {@macro atmos.binnaryWriter.av}
   void writeListUint16AV(List<int> val, {int csz = 0, int? size}) {
-    final _l = size ?? writeSize(val.length, csz);
-    if (_l == 0) return;
+    final l = size ?? writeSize(val.length, csz);
+    if (l == 0) return;
     align(2);
-    _reserveBytes(_l * 2);
+    _reserveBytes(l * 2);
     Uint16List.view(_buffer.buffer, _length).setAll(0, val);
-    _length += _l * 2;
+    _length += l * 2;
   }
 
   /// {@macro atmos.binnaryWriter.av}
   void writeListUint32AV(List<int> val, {int csz = 0, int? size}) {
-    final _l = size ?? writeSize(val.length, csz);
-    if (_l == 0) return;
+    final l = size ?? writeSize(val.length, csz);
+    if (l == 0) return;
     align(4);
-    _reserveBytes(_l * 4);
+    _reserveBytes(l * 4);
     Uint32List.view(_buffer.buffer, _length).setAll(0, val);
-    _length += _l * 4;
+    _length += l * 4;
   }
 
   /// {@template atmos.binnaryWriter.av}
@@ -235,12 +233,12 @@ class BinaryWriter implements BytesBuilder {
   ///
   /// {@endtemplate}
   void writeListUint64AV(List<int> val, {int csz = 0, int? size}) {
-    final _l = size ?? writeSize(val.length, csz);
-    if (_l == 0) return;
+    final l = size ?? writeSize(val.length, csz);
+    if (l == 0) return;
     align(8);
-    _reserveBytes(_l * 8);
+    _reserveBytes(l * 8);
     Uint64List.view(_buffer.buffer, _length).setAll(0, val);
-    _length += _l * 8;
+    _length += l * 8;
   }
 
   ///
@@ -309,12 +307,12 @@ class BinaryWriter implements BytesBuilder {
 
   ///
   void writeListUint8(List<int> val, {int csz = 0, int? size}) {
-    final _l = size ?? writeSize(val.length, csz);
-    if (_l == 0) return;
+    final l = size ?? writeSize(val.length, csz);
+    if (l == 0) return;
     align(1);
-    _reserveBytes(_l * 1);
+    _reserveBytes(l * 1);
     Uint8List.view(_buffer.buffer, _length).setAll(0, val);
-    _length += _l * 1;
+    _length += l * 1;
   }
 
   /// Записывает строку
@@ -518,12 +516,12 @@ class BinaryWriter implements BytesBuilder {
     assert(csz >= 0 && csz <= 4, 'CSZ incorrect');
     switch (csz) {
       case 0:
-        var _count = count;
-        while (_count >= 0x80) {
-          writeUint8((_count & 0x7f) | 0x80);
-          _count >>= 7;
+        var n = count;
+        while (n >= 0x80) {
+          writeUint8((n & 0x7f) | 0x80);
+          n >>= 7;
         }
-        writeUint8(_count);
+        writeUint8(n);
         break;
       case 1:
         writeUint8(count);
@@ -547,12 +545,14 @@ class BinaryWriter implements BytesBuilder {
   void align(int bytes) {
     if (bytes == 1) return;
     assert(
-        bytes == pow2roundup(bytes), 'Указано не кратное степени 2 значение');
-    final _n = bytes - (_length & (bytes - 1));
-    if (_n == bytes) {
+      bytes == pow2roundup(bytes),
+      'Указано не кратное степени 2 значение',
+    );
+    final n = bytes - (_length & (bytes - 1));
+    if (n == bytes) {
       return;
     }
-    skip(_n);
+    skip(n);
   }
 
   /// Пропускает некоторое количество байт.

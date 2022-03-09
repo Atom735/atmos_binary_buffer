@@ -1,10 +1,11 @@
 import 'dart:convert';
-
 import 'dart:typed_data';
 
 import 'utils.dart';
 
+/// Binary buffer reader, for read data from buffer.
 ///
+/// @RU Класс для чтения данных из байт-буффера для чтения различных данных.
 class BinaryReader {
   /// Создаёт ридер для чтения байтового буффера переданного в [buffer]
   factory BinaryReader(Uint8List buffer) = BinaryReader._;
@@ -83,82 +84,82 @@ class BinaryReader {
 
   /// {@macro atmos.binnaryReader.av}
   Float32List readListFloat32AV({int csz = 0, int? size}) {
-    final _l = size ?? readSize(csz);
-    if (_l == 0) return Float32List.view(_emptyBuffer, 0, 0);
+    final l = size ?? readSize(csz);
+    if (l == 0) return Float32List.view(_emptyBuffer, 0, 0);
     align(4);
-    _reserveBytes(_l * 4);
-    _offset += _l * 4;
-    return Float32List.view(_buffer.buffer, _offset - _l * 4, _l);
+    _reserveBytes(l * 4);
+    _offset += l * 4;
+    return Float32List.view(_buffer.buffer, _offset - l * 4, l);
   }
 
   /// {@macro atmos.binnaryReader.av}
   Float64List readListFloat64AV({int csz = 0, int? size}) {
-    final _l = size ?? readSize(csz);
-    if (_l == 0) return Float64List.view(_emptyBuffer, 0, 0);
+    final l = size ?? readSize(csz);
+    if (l == 0) return Float64List.view(_emptyBuffer, 0, 0);
     align(8);
-    _reserveBytes(_l * 8);
-    _offset += _l * 8;
-    return Float64List.view(_buffer.buffer, _offset - _l * 8, _l);
+    _reserveBytes(l * 8);
+    _offset += l * 8;
+    return Float64List.view(_buffer.buffer, _offset - l * 8, l);
   }
 
   /// {@macro atmos.binnaryReader.av}
   Int16List readListInt16AV({int csz = 0, int? size}) {
-    final _l = size ?? readSize(csz);
-    if (_l == 0) return Int16List.view(_emptyBuffer, 0, 0);
+    final l = size ?? readSize(csz);
+    if (l == 0) return Int16List.view(_emptyBuffer, 0, 0);
     align(2);
-    _reserveBytes(_l * 2);
-    _offset += _l * 2;
-    return Int16List.view(_buffer.buffer, _offset - _l * 2, _l);
+    _reserveBytes(l * 2);
+    _offset += l * 2;
+    return Int16List.view(_buffer.buffer, _offset - l * 2, l);
   }
 
   /// {@macro atmos.binnaryReader.av}
   Int32List readListInt32AV({int csz = 0, int? size}) {
-    final _l = size ?? readSize(csz);
-    if (_l == 0) return Int32List.view(_emptyBuffer, 0, 0);
+    final l = size ?? readSize(csz);
+    if (l == 0) return Int32List.view(_emptyBuffer, 0, 0);
     align(4);
-    _reserveBytes(_l * 4);
-    _offset += _l * 4;
-    return Int32List.view(_buffer.buffer, _offset - _l * 4, _l);
+    _reserveBytes(l * 4);
+    _offset += l * 4;
+    return Int32List.view(_buffer.buffer, _offset - l * 4, l);
   }
 
   /// {@macro atmos.binnaryReader.av}
   Int64List readListInt64AV({int csz = 0, int? size}) {
-    final _l = size ?? readSize(csz);
-    if (_l == 0) return Int64List.view(_emptyBuffer, 0, 0);
+    final l = size ?? readSize(csz);
+    if (l == 0) return Int64List.view(_emptyBuffer, 0, 0);
     align(8);
-    _reserveBytes(_l * 8);
-    _offset += _l * 8;
-    return Int64List.view(_buffer.buffer, _offset - _l * 8, _l);
+    _reserveBytes(l * 8);
+    _offset += l * 8;
+    return Int64List.view(_buffer.buffer, _offset - l * 8, l);
   }
 
   ///
   Int8List readListInt8({int csz = 0, int? size}) {
-    final _l = size ?? readSize(csz);
-    if (_l == 0) return Int8List.view(_emptyBuffer, 0, 0);
+    final l = size ?? readSize(csz);
+    if (l == 0) return Int8List.view(_emptyBuffer, 0, 0);
     align(1);
-    _reserveBytes(_l * 1);
-    _offset += _l * 1;
-    return Int8List.view(_buffer.buffer, _offset - _l * 1, _l);
+    _reserveBytes(l * 1);
+    _offset += l * 1;
+    return Int8List.view(_buffer.buffer, _offset - l * 1, l);
   }
 
   /// {@macro atmos.binnaryReader.av}
   Uint16List readListUint16AV({int csz = 0, int? size}) {
-    final _l = size ?? readSize(csz);
-    if (_l == 0) return Uint16List.view(_emptyBuffer, 0, 0);
+    final l = size ?? readSize(csz);
+    if (l == 0) return Uint16List.view(_emptyBuffer, 0, 0);
     align(2);
-    _reserveBytes(_l * 2);
-    _offset += _l * 2;
-    return Uint16List.view(_buffer.buffer, _offset - _l * 2, _l);
+    _reserveBytes(l * 2);
+    _offset += l * 2;
+    return Uint16List.view(_buffer.buffer, _offset - l * 2, l);
   }
 
   /// {@macro atmos.binnaryReader.av}
   Uint32List readListUint32AV({int csz = 0, int? size}) {
-    final _l = size ?? readSize(csz);
-    if (_l == 0) return Uint32List.view(_emptyBuffer, 0, 0);
+    final l = size ?? readSize(csz);
+    if (l == 0) return Uint32List.view(_emptyBuffer, 0, 0);
     align(4);
-    _reserveBytes(_l * 4);
-    _offset += _l * 4;
-    return Uint32List.view(_buffer.buffer, _offset - _l * 4, _l);
+    _reserveBytes(l * 4);
+    _offset += l * 4;
+    return Uint32List.view(_buffer.buffer, _offset - l * 4, l);
   }
 
   /// {@template atmos.binnaryReader.av}
@@ -172,22 +173,22 @@ class BinaryReader {
   /// не будут освобождены.
   /// {@endtemplate}
   Uint64List readListUint64AV({int csz = 0, int? size}) {
-    final _l = size ?? readSize(csz);
-    if (_l == 0) return Uint64List.view(_emptyBuffer, 0, 0);
+    final l = size ?? readSize(csz);
+    if (l == 0) return Uint64List.view(_emptyBuffer, 0, 0);
     align(8);
-    _reserveBytes(_l * 8);
-    _offset += _l * 8;
-    return Uint64List.view(_buffer.buffer, _offset - _l * 8, _l);
+    _reserveBytes(l * 8);
+    _offset += l * 8;
+    return Uint64List.view(_buffer.buffer, _offset - l * 8, l);
   }
 
   ///
   Uint8List readListUint8({int csz = 0, int? size}) {
-    final _l = size ?? readSize(csz);
-    if (_l == 0) return Uint8List.view(_emptyBuffer, 0, 0);
+    final l = size ?? readSize(csz);
+    if (l == 0) return Uint8List.view(_emptyBuffer, 0, 0);
     align(1);
-    _reserveBytes(_l * 1);
-    _offset += _l * 1;
-    return Uint8List.view(_buffer.buffer, _offset - _l * 1, _l);
+    _reserveBytes(l * 1);
+    _offset += l * 1;
+    return Uint8List.view(_buffer.buffer, _offset - l * 1, l);
   }
 
   ///
@@ -256,8 +257,8 @@ class BinaryReader {
     int csz = 0,
     int? size,
   }) {
-    final _l = size ?? readSize(csz);
-    return List<T>.generate(_l, (i) => func(i, this));
+    final l = size ?? readSize(csz);
+    return List<T>.generate(l, (i) => func(i, this));
   }
 
   /// Считывает строку
@@ -445,11 +446,11 @@ class BinaryReader {
       bytes == pow2roundup(bytes),
       'Указано не кратное степени 2 значение',
     );
-    final _n = bytes - (_offset & (bytes - 1));
-    if (_n == bytes) {
+    final n = bytes - (_offset & (bytes - 1));
+    if (n == bytes) {
       return;
     }
-    skip(_n);
+    skip(n);
   }
 
   @pragma('vm:prefer-inline')
