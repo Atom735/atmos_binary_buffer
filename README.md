@@ -1,14 +1,14 @@
 # Atmos Binary Buffer Package
 
-## instal
+## install
 
 ```yaml
 dependencies:
-  atmos_binary_buffer: ^0.16.1
+  atmos_binary_buffer: ^0.16.2
 ```
 
 ## import
 
-```yaml
-include: package:atmos_binary_buffer/atmos_binary_buffer.yaml
+```dart
+import 'package:atmos_binary_buffer/atmos_binary_buffer.dart';
 ```
