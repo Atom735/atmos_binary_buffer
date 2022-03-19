@@ -438,6 +438,31 @@ class BinaryReader {
     return -1;
   }
 
+  ///
+  @pragma('vm:prefer-inline')
+  @pragma('dart2js:tryInline')
+  List<int> readListSize({int csz = 0, int? size}) =>
+      readList(_listReaderSize, csz: csz, size: size);
+  static int _listReaderSize(int i, BinaryReader m) => m.readSize();
+
+  /// Записывает запакованное целое число
+  @pragma('vm:prefer-inline')
+  @pragma('dart2js:tryInline')
+  int readPackedInt() {
+    final i = readSize();
+    if (i & 1 == 1) {
+      return (i >>> 1) ^ 0xffffffffffffffff;
+    }
+    return i >>> 1;
+  }
+
+  ///
+  @pragma('vm:prefer-inline')
+  @pragma('dart2js:tryInline')
+  List<int> readListPackedInt({int csz = 0, int? size}) =>
+      readList(_listReaderPackedInt, csz: csz, size: size);
+  static int _listReaderPackedInt(int i, BinaryReader m) => m.readPackedInt();
+
   /// Выравнивание указателя чтения до кратного значения байт
   @pragma('vm:prefer-inline')
   @pragma('dart2js:tryInline')

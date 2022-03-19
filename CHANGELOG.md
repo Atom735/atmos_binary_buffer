@@ -1,5 +1,13 @@
 # Changes
 
+## 0.16.3
+
+- add read/write for list of sizes (packed uint) values
+    `readListSize`/`writeListSize`
+
+- add read/write for packed integer value and list of thats values
+    `readPackedInt`/`writePackedInt`/`readListPackedInt`/`writeListPackedInt`
+
 ## 0.16.2
 
 - fixed README

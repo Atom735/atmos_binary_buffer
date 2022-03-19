@@ -539,6 +539,31 @@ class BinaryWriter implements BytesBuilder {
     return count;
   }
 
+  @pragma('vm:prefer-inline')
+  @pragma('dart2js:tryInline')
+  void writeListSize(List<int> val, {int csz = 0, int? size}) =>
+      writeList(val, _listWriteterSize, csz: csz, size: size);
+  static void _listWriteterSize(int val, int i, BinaryWriter writer) =>
+      writer.writeSize(val);
+
+  /// Записывает запакованное целое число
+  @pragma('vm:prefer-inline')
+  @pragma('dart2js:tryInline')
+  void writePackedInt(int value) {
+    if (value < 0) {
+      value ^= 0xffffffffffffffff;
+      writeSize((value << 1) | 1);
+    }
+    writeSize((value << 1) | 0);
+  }
+
+  @pragma('vm:prefer-inline')
+  @pragma('dart2js:tryInline')
+  void writeListPackedInt(List<int> val, {int csz = 0, int? size}) =>
+      writeList(val, _listWriteterPackedInt, csz: csz, size: size);
+  static void _listWriteterPackedInt(int val, int i, BinaryWriter writer) =>
+      writer.writePackedInt(val);
+
   /// Выравнивание указателя чтения до кратного значения байт
   @pragma('vm:prefer-inline')
   @pragma('dart2js:tryInline')
