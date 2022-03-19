@@ -1,5 +1,9 @@
 # Changes
 
+## 0.16.4
+
+- set new pack algorithm
+
 ## 0.16.3
 
 - add read/write for list of sizes (packed uint) values

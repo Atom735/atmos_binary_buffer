@@ -509,6 +509,8 @@ class BinaryWriter implements BytesBuilder {
   /// * [csz]=2 - [writeUint16]
   /// * [csz]=3 - [writeUint32]
   /// * [csz]=4 - [writeUint64]
+  ///
+  /// {@macro atmos.binnaryBuffer.packInt}
   @pragma('vm:prefer-inline')
   @pragma('dart2js:tryInline')
   int writeSize(int count, [int csz = 0]) {
@@ -517,24 +519,93 @@ class BinaryWriter implements BytesBuilder {
     switch (csz) {
       case 0:
         var n = count;
-        while (n >= 0x80) {
-          writeUint8((n & 0x7f) | 0x80);
-          n >>= 7;
+        if (n < 0x80) {
+          writeUint8(n);
+          return count;
         }
-        writeUint8(n);
-        break;
+        if (n < 0x4000) {
+          writeUint8(((n >> 8) & 0xFF) | 0x80);
+          writeUint8(n & 0xFF);
+          return count;
+        }
+        if (n < 0x200000) {
+          writeUint8(((n >> 16) & 0xFF) | 0xC0);
+          writeUint8((n >> 8) & 0xFF);
+          writeUint8(n & 0xFF);
+          return count;
+        }
+
+        if (n < 0x10000000) {
+          writeUint8(((n >> 24) & 0xFF) | 0xE0);
+          writeUint8((n >> 16) & 0xFF);
+          writeUint8((n >> 8) & 0xFF);
+          writeUint8(n & 0xFF);
+          return count;
+        }
+
+        if (n < 0x0800000000) {
+          writeUint8(((n >> 32) & 0xFF) | 0xF0);
+          writeUint8((n >> 24) & 0xFF);
+          writeUint8((n >> 16) & 0xFF);
+          writeUint8((n >> 8) & 0xFF);
+          writeUint8(n & 0xFF);
+          return count;
+        }
+
+        if (n < 0x040000000000) {
+          writeUint8(((n >> 40) & 0xFF) | 0xF8);
+          writeUint8((n >> 32) & 0xFF);
+          writeUint8((n >> 24) & 0xFF);
+          writeUint8((n >> 16) & 0xFF);
+          writeUint8((n >> 8) & 0xFF);
+          writeUint8(n & 0xFF);
+          return count;
+        }
+
+        if (n < 0x02000000000000) {
+          writeUint8(((n >> 48) & 0xFF) | 0xFC);
+          writeUint8((n >> 40) & 0xFF);
+          writeUint8((n >> 32) & 0xFF);
+          writeUint8((n >> 24) & 0xFF);
+          writeUint8((n >> 16) & 0xFF);
+          writeUint8((n >> 8) & 0xFF);
+          writeUint8(n & 0xFF);
+          return count;
+        }
+        if (n < 0x0100000000000000) {
+          writeUint8(((n >> 56) & 0xFF) | 0xFE);
+          writeUint8((n >> 48) & 0xFF);
+          writeUint8((n >> 40) & 0xFF);
+          writeUint8((n >> 32) & 0xFF);
+          writeUint8((n >> 24) & 0xFF);
+          writeUint8((n >> 16) & 0xFF);
+          writeUint8((n >> 8) & 0xFF);
+          writeUint8(n & 0xFF);
+          return count;
+        }
+
+        writeUint8(0xFF);
+        writeUint8((n >> 56) & 0xFF);
+        writeUint8((n >> 48) & 0xFF);
+        writeUint8((n >> 40) & 0xFF);
+        writeUint8((n >> 32) & 0xFF);
+        writeUint8((n >> 24) & 0xFF);
+        writeUint8((n >> 16) & 0xFF);
+        writeUint8((n >> 8) & 0xFF);
+        writeUint8(n & 0xFF);
+        return count;
       case 1:
         writeUint8(count);
-        break;
+        return count;
       case 2:
         writeUint16(count);
-        break;
+        return count;
       case 3:
         writeUint32(count);
-        break;
+        return count;
       case 4:
         writeUint64(count);
-        break;
+        return count;
     }
     return count;
   }
@@ -547,6 +618,8 @@ class BinaryWriter implements BytesBuilder {
       writer.writeSize(val);
 
   /// Записывает запакованное целое число
+  ///
+  /// {@macro atmos.binnaryBuffer.packInt}
   @pragma('vm:prefer-inline')
   @pragma('dart2js:tryInline')
   void writePackedInt(int value) {

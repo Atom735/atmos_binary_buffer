@@ -410,22 +410,45 @@ class BinaryReader {
   /// * [csz]=2 - [readUint16]
   /// * [csz]=3 - [readUint32]
   /// * [csz]=4 - [readUint64]
+  ///
+  /// {@macro atmos.binnaryBuffer.packInt}
   @pragma('vm:prefer-inline')
   @pragma('dart2js:tryInline')
   int readSize([int csz = 0]) {
     assert(csz >= 0 && csz <= 4, 'CSZ incorrect');
     switch (csz) {
       case 0:
-        var count = 0;
-        var byte = readUint8();
-        var s = 0;
-        while (byte & 0x80 != 0) {
-          count |= (byte & 0x7f) << s;
-          s += 7;
-          byte = readUint8();
+        final byte = readUint8();
+        if (byte & 0x80 == 0) return byte;
+        var a = readUint8();
+        if (byte & 0xC0 == 0x80) {
+          return ((byte ^ 0x80) << 8) | a;
         }
-        count |= byte << s;
-        return count;
+        a = readUint8() | (a << 8);
+        if (byte & 0xE == 0xC0) {
+          return ((byte ^ 0xC0) << 16) | a;
+        }
+        a = readUint8() | (a << 8);
+        if (byte & 0xF0 == 0xE0) {
+          return ((byte ^ 0xE0) << 24) | a;
+        }
+        a = readUint8() | (a << 8);
+        if (byte & 0xF8 == 0xF0) {
+          return ((byte ^ 0xF0) << 32) | a;
+        }
+        a = readUint8() | (a << 8);
+        if (byte & 0xFC == 0xF8) {
+          return ((byte ^ 0xF8) << 40) | a;
+        }
+        a = readUint8() | (a << 8);
+        if (byte & 0xFE == 0xFC) {
+          return ((byte ^ 0xFC) << 48) | a;
+        }
+        a = readUint8() | (a << 8);
+        if (byte == 0xFE) {
+          return ((byte ^ 0xFE) << 56) | a;
+        }
+        return readUint8() | (a << 8);
       case 1:
         return readUint8();
       case 2:
@@ -445,7 +468,9 @@ class BinaryReader {
       readList(_listReaderSize, csz: csz, size: size);
   static int _listReaderSize(int i, BinaryReader m) => m.readSize();
 
-  /// Записывает запакованное целое число
+  /// Считывает запакованное целое число
+  ///
+  /// {@macro atmos.binnaryBuffer.packInt}
   @pragma('vm:prefer-inline')
   @pragma('dart2js:tryInline')
   int readPackedInt() {
