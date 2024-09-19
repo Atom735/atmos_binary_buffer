@@ -1,5 +1,5 @@
 name: atmos_binary_buffer
-version: 0.16.4
+version: 0.16.6
 description: "Dart helper package to work with binary buffers by Atom735"
 repository: https://github.com/Atom735/atmos_binary_buffer
 environment:
@@ -7,3 +7,4 @@ environment:
 
 dev_dependencies:
   atmos_lints: ^0.16.1
+  test: ^1.20.2

@@ -1,5 +1,13 @@
 # Changes
 
+## 0.16.6
+
+- fix troubles with read lists views from offsetted view
+
+## 0.16.5
+
+- fix missed symbol in code
+
 ## 0.16.4
 
 - set new pack algorithm

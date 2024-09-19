@@ -11,10 +11,14 @@ class BinaryReader {
   factory BinaryReader(Uint8List buffer) = BinaryReader._;
 
   BinaryReader._(this._buffer)
-      : _byteData = ByteData.view(_buffer.buffer, _buffer.offsetInBytes);
+      : _byteData = ByteData.view(_buffer.buffer, _buffer.offsetInBytes),
+        _byteDataOffset = _buffer.offsetInBytes;
 
   /// Количество считанных байт в буффере
   int _offset = 0;
+
+  /// Количество считанных байт в буффере
+  final int _byteDataOffset;
 
   final ByteData _byteData;
 
@@ -89,7 +93,8 @@ class BinaryReader {
     align(4);
     _reserveBytes(l * 4);
     _offset += l * 4;
-    return Float32List.view(_buffer.buffer, _offset - l * 4, l);
+    return Float32List.view(
+        _buffer.buffer, _offset + _byteDataOffset - l * 4, l);
   }
 
   /// {@macro atmos.binnaryReader.av}
@@ -99,7 +104,8 @@ class BinaryReader {
     align(8);
     _reserveBytes(l * 8);
     _offset += l * 8;
-    return Float64List.view(_buffer.buffer, _offset - l * 8, l);
+    return Float64List.view(
+        _buffer.buffer, _offset + _byteDataOffset - l * 8, l);
   }
 
   /// {@macro atmos.binnaryReader.av}
@@ -109,7 +115,7 @@ class BinaryReader {
     align(2);
     _reserveBytes(l * 2);
     _offset += l * 2;
-    return Int16List.view(_buffer.buffer, _offset - l * 2, l);
+    return Int16List.view(_buffer.buffer, _offset + _byteDataOffset - l * 2, l);
   }
 
   /// {@macro atmos.binnaryReader.av}
@@ -119,7 +125,7 @@ class BinaryReader {
     align(4);
     _reserveBytes(l * 4);
     _offset += l * 4;
-    return Int32List.view(_buffer.buffer, _offset - l * 4, l);
+    return Int32List.view(_buffer.buffer, _offset + _byteDataOffset - l * 4, l);
   }
 
   /// {@macro atmos.binnaryReader.av}
@@ -129,7 +135,7 @@ class BinaryReader {
     align(8);
     _reserveBytes(l * 8);
     _offset += l * 8;
-    return Int64List.view(_buffer.buffer, _offset - l * 8, l);
+    return Int64List.view(_buffer.buffer, _offset + _byteDataOffset - l * 8, l);
   }
 
   ///
@@ -139,7 +145,7 @@ class BinaryReader {
     align(1);
     _reserveBytes(l * 1);
     _offset += l * 1;
-    return Int8List.view(_buffer.buffer, _offset - l * 1, l);
+    return Int8List.view(_buffer.buffer, _offset + _byteDataOffset - l * 1, l);
   }
 
   /// {@macro atmos.binnaryReader.av}
@@ -149,7 +155,8 @@ class BinaryReader {
     align(2);
     _reserveBytes(l * 2);
     _offset += l * 2;
-    return Uint16List.view(_buffer.buffer, _offset - l * 2, l);
+    return Uint16List.view(
+        _buffer.buffer, _offset + _byteDataOffset - l * 2, l);
   }
 
   /// {@macro atmos.binnaryReader.av}
@@ -159,7 +166,8 @@ class BinaryReader {
     align(4);
     _reserveBytes(l * 4);
     _offset += l * 4;
-    return Uint32List.view(_buffer.buffer, _offset - l * 4, l);
+    return Uint32List.view(
+        _buffer.buffer, _offset + _byteDataOffset - l * 4, l);
   }
 
   /// {@template atmos.binnaryReader.av}
@@ -178,7 +186,8 @@ class BinaryReader {
     align(8);
     _reserveBytes(l * 8);
     _offset += l * 8;
-    return Uint64List.view(_buffer.buffer, _offset - l * 8, l);
+    return Uint64List.view(
+        _buffer.buffer, _offset + _byteDataOffset - l * 8, l);
   }
 
   ///
@@ -188,7 +197,7 @@ class BinaryReader {
     align(1);
     _reserveBytes(l * 1);
     _offset += l * 1;
-    return Uint8List.view(_buffer.buffer, _offset - l * 1, l);
+    return Uint8List.view(_buffer.buffer, _offset + _byteDataOffset - l * 1, l);
   }
 
   ///
@@ -425,7 +434,7 @@ class BinaryReader {
           return ((byte ^ 0x80) << 8) | a;
         }
         a = readUint8() | (a << 8);
-        if (byte & 0xE == 0xC0) {
+        if (byte & 0xE0 == 0xC0) {
           return ((byte ^ 0xC0) << 16) | a;
         }
         a = readUint8() | (a << 8);

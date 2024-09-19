@@ -518,7 +518,7 @@ class BinaryWriter implements BytesBuilder {
     assert(csz >= 0 && csz <= 4, 'CSZ incorrect');
     switch (csz) {
       case 0:
-        var n = count;
+        final n = count;
         if (n < 0x80) {
           writeUint8(n);
           return count;
