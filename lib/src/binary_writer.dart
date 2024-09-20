@@ -6,12 +6,16 @@ import 'utils.dart';
 /// Binary buffer writer, for write new data to buffer and take result.
 class BinaryWriter implements BytesBuilder {
   ///
-  factory BinaryWriter() => BinaryWriter._(_emptyList);
+  factory BinaryWriter([Endian endian = Endian.big]) =>
+      BinaryWriter._(_emptyList, endian);
 
   ///
-  factory BinaryWriter.withBuffer(Uint8List buffer) = BinaryWriter._;
+  factory BinaryWriter.withBuffer(Uint8List buffer, [Endian endian]) =
+      BinaryWriter._;
 
-  BinaryWriter._(this._buffer);
+  BinaryWriter._(this._buffer, [this.endian = Endian.big]);
+
+  Endian endian;
 
   /// Начальный размер буффера
   static const int _initSize = 1024;
@@ -93,35 +97,35 @@ class BinaryWriter implements BytesBuilder {
   ///
   void writeFloat32(double val) {
     _reserveBytes(4);
-    _byteData.setFloat32(_length, val);
+    _byteData.setFloat32(_length, val, endian);
     _length += 4;
   }
 
   ///
   void writeFloat64(double val) {
     _reserveBytes(8);
-    _byteData.setFloat64(_length, val);
+    _byteData.setFloat64(_length, val, endian);
     _length += 8;
   }
 
   ///
   void writeInt16(int val) {
     _reserveBytes(2);
-    _byteData.setInt16(_length, val);
+    _byteData.setInt16(_length, val, endian);
     _length += 2;
   }
 
   ///
   void writeInt32(int val) {
     _reserveBytes(4);
-    _byteData.setInt32(_length, val);
+    _byteData.setInt32(_length, val, endian);
     _length += 4;
   }
 
   ///
   void writeInt64(int val) {
     _reserveBytes(8);
-    _byteData.setInt64(_length, val);
+    _byteData.setInt64(_length, val, endian);
     _length += 8;
   }
 
@@ -452,21 +456,21 @@ class BinaryWriter implements BytesBuilder {
   ///
   void writeUint16(int val) {
     _reserveBytes(2);
-    _byteData.setUint16(_length, val);
+    _byteData.setUint16(_length, val, endian);
     _length += 2;
   }
 
   ///
   void writeUint32(int val) {
     _reserveBytes(4);
-    _byteData.setUint32(_length, val);
+    _byteData.setUint32(_length, val, endian);
     _length += 4;
   }
 
   ///
   void writeUint64(int val) {
     _reserveBytes(8);
-    _byteData.setUint64(_length, val);
+    _byteData.setUint64(_length, val, endian);
     _length += 8;
   }
 

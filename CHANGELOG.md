@@ -1,5 +1,9 @@
 # Changes
 
+## 0.17.0
+
+- added endian to reader/writer
+
 ## 0.16.6
 
 - fix troubles with read lists views from offsetted view

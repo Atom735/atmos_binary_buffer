@@ -8,14 +8,16 @@ import 'utils.dart';
 /// @RU Класс для чтения данных из байт-буффера для чтения различных данных.
 class BinaryReader {
   /// Создаёт ридер для чтения байтового буффера переданного в [buffer]
-  factory BinaryReader(Uint8List buffer) = BinaryReader._;
+  factory BinaryReader(Uint8List buffer, [Endian endian]) = BinaryReader._;
 
-  BinaryReader._(this._buffer)
+  BinaryReader._(this._buffer, [this.endian = Endian.big])
       : _byteData = ByteData.view(_buffer.buffer, _buffer.offsetInBytes),
         _byteDataOffset = _buffer.offsetInBytes;
 
   /// Количество считанных байт в буффере
   int _offset = 0;
+
+  Endian endian;
 
   /// Количество считанных байт в буффере
   final int _byteDataOffset;
@@ -48,35 +50,35 @@ class BinaryReader {
   double readFloat32() {
     _reserveBytes(4);
     _offset += 4;
-    return _byteData.getFloat32(_offset - 4);
+    return _byteData.getFloat32(_offset - 4, endian);
   }
 
   ///
   double readFloat64() {
     _reserveBytes(8);
     _offset += 8;
-    return _byteData.getFloat64(_offset - 8);
+    return _byteData.getFloat64(_offset - 8, endian);
   }
 
   ///
   int readInt16() {
     _reserveBytes(2);
     _offset += 2;
-    return _byteData.getInt16(_offset - 2);
+    return _byteData.getInt16(_offset - 2, endian);
   }
 
   ///
   int readInt32() {
     _reserveBytes(4);
     _offset += 4;
-    return _byteData.getInt32(_offset - 4);
+    return _byteData.getInt32(_offset - 4, endian);
   }
 
   ///
   int readInt64() {
     _reserveBytes(8);
     _offset += 8;
-    return _byteData.getInt64(_offset - 8);
+    return _byteData.getInt64(_offset - 8, endian);
   }
 
   ///
@@ -387,21 +389,21 @@ class BinaryReader {
   int readUint16() {
     _reserveBytes(2);
     _offset += 2;
-    return _byteData.getUint16(_offset - 2);
+    return _byteData.getUint16(_offset - 2, endian);
   }
 
   ///
   int readUint32() {
     _reserveBytes(4);
     _offset += 4;
-    return _byteData.getUint32(_offset - 4);
+    return _byteData.getUint32(_offset - 4, endian);
   }
 
   ///
   int readUint64() {
     _reserveBytes(8);
     _offset += 8;
-    return _byteData.getUint64(_offset - 8);
+    return _byteData.getUint64(_offset - 8, endian);
   }
 
   /// Пропустить несколько байт
