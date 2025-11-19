@@ -1,5 +1,13 @@
 # Changes
 
+## 1.0.0
+
+- fix zigzag encoding/decoding for web compatibility (use `>>` instead of `>>>`)
+- fix `ByteData.view` and typed list views to properly handle buffers with `offsetInBytes`
+- fix all `writeList*AV` methods to account for buffer offset when creating views
+- update documentation with detailed zigzag encoding description
+- add web compatibility limitations section to documentation
+
 ## 0.17.0
 
 - added endian to reader/writer

@@ -45,7 +45,10 @@ class BinaryWriter implements BytesBuilder {
   @pragma('vm:prefer-inline')
   @pragma('dart2js:tryInline')
   ByteData get _byteData {
-    _byteDataInstance ??= ByteData.view(_buffer.buffer);
+    _byteDataInstance ??= ByteData.view(
+      _buffer.buffer,
+      _buffer.offsetInBytes,
+    );
     return _byteDataInstance!;
   }
 
@@ -161,7 +164,10 @@ class BinaryWriter implements BytesBuilder {
     if (l == 0) return;
     align(4);
     _reserveBytes(l * 4);
-    Float32List.view(_buffer.buffer, _length).setAll(0, val);
+    Float32List.view(
+      _buffer.buffer,
+      _buffer.offsetInBytes + _length,
+    ).setAll(0, val);
     _length += l * 4;
   }
 
@@ -171,7 +177,10 @@ class BinaryWriter implements BytesBuilder {
     if (l == 0) return;
     align(8);
     _reserveBytes(l * 8);
-    Float64List.view(_buffer.buffer, _length).setAll(0, val);
+    Float64List.view(
+      _buffer.buffer,
+      _buffer.offsetInBytes + _length,
+    ).setAll(0, val);
     _length += l * 8;
   }
 
@@ -181,7 +190,10 @@ class BinaryWriter implements BytesBuilder {
     if (l == 0) return;
     align(2);
     _reserveBytes(l * 2);
-    Int16List.view(_buffer.buffer, _length).setAll(0, val);
+    Int16List.view(
+      _buffer.buffer,
+      _buffer.offsetInBytes + _length,
+    ).setAll(0, val);
     _length += l * 2;
   }
 
@@ -191,7 +203,10 @@ class BinaryWriter implements BytesBuilder {
     if (l == 0) return;
     align(4);
     _reserveBytes(l * 4);
-    Int32List.view(_buffer.buffer, _length).setAll(0, val);
+    Int32List.view(
+      _buffer.buffer,
+      _buffer.offsetInBytes + _length,
+    ).setAll(0, val);
     _length += l * 4;
   }
 
@@ -201,7 +216,10 @@ class BinaryWriter implements BytesBuilder {
     if (l == 0) return;
     align(8);
     _reserveBytes(l * 8);
-    Int64List.view(_buffer.buffer, _length).setAll(0, val);
+    Int64List.view(
+      _buffer.buffer,
+      _buffer.offsetInBytes + _length,
+    ).setAll(0, val);
     _length += l * 8;
   }
 
@@ -211,7 +229,10 @@ class BinaryWriter implements BytesBuilder {
     if (l == 0) return;
     align(1);
     _reserveBytes(l * 1);
-    Int8List.view(_buffer.buffer, _length).setAll(0, val);
+    Int8List.view(
+      _buffer.buffer,
+      _buffer.offsetInBytes + _length,
+    ).setAll(0, val);
     _length += l * 1;
   }
 
@@ -221,7 +242,10 @@ class BinaryWriter implements BytesBuilder {
     if (l == 0) return;
     align(2);
     _reserveBytes(l * 2);
-    Uint16List.view(_buffer.buffer, _length).setAll(0, val);
+    Uint16List.view(
+      _buffer.buffer,
+      _buffer.offsetInBytes + _length,
+    ).setAll(0, val);
     _length += l * 2;
   }
 
@@ -231,7 +255,10 @@ class BinaryWriter implements BytesBuilder {
     if (l == 0) return;
     align(4);
     _reserveBytes(l * 4);
-    Uint32List.view(_buffer.buffer, _length).setAll(0, val);
+    Uint32List.view(
+      _buffer.buffer,
+      _buffer.offsetInBytes + _length,
+    ).setAll(0, val);
     _length += l * 4;
   }
 
@@ -248,7 +275,10 @@ class BinaryWriter implements BytesBuilder {
     if (l == 0) return;
     align(8);
     _reserveBytes(l * 8);
-    Uint64List.view(_buffer.buffer, _length).setAll(0, val);
+    Uint64List.view(
+      _buffer.buffer,
+      _buffer.offsetInBytes + _length,
+    ).setAll(0, val);
     _length += l * 8;
   }
 
@@ -322,7 +352,10 @@ class BinaryWriter implements BytesBuilder {
     if (l == 0) return;
     align(1);
     _reserveBytes(l * 1);
-    Uint8List.view(_buffer.buffer, _length).setAll(0, val);
+    Uint8List.view(
+      _buffer.buffer,
+      _buffer.offsetInBytes + _length,
+    ).setAll(0, val);
     _length += l * 1;
   }
 
