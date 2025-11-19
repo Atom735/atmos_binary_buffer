@@ -1,5 +1,10 @@
 # Changes
 
+## 1.0.1
+
+- update documentation: split into ENG and RU sections (ENG on top)
+- update README version to 1.0.1
+
 ## 1.0.0
 
 - fix zigzag encoding/decoding for web compatibility (use `>>` instead of `>>>`)
