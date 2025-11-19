@@ -422,7 +422,7 @@ class BinaryReader {
   /// * [csz]=3 - [readUint32]
   /// * [csz]=4 - [readUint64]
   ///
-  /// {@macro atmos.binnaryBuffer.packInt}
+  /// {@macro atmos.binaryBuffer.packInt}
   @pragma('vm:prefer-inline')
   @pragma('dart2js:tryInline')
   int readSize([int csz = 0]) {
@@ -481,15 +481,16 @@ class BinaryReader {
 
   /// Считывает запакованное целое число
   ///
-  /// {@macro atmos.binnaryBuffer.packInt}
+  /// {@macro atmos.binaryBuffer.packInt}
   @pragma('vm:prefer-inline')
   @pragma('dart2js:tryInline')
   int readPackedInt() {
     final i = readSize();
-    if (i & 1 == 1) {
-      return (i >>> 1) ^ 0xffffffffffffffff;
-    }
-    return i >>> 1;
+    // Zigzag decoding: (n >> 1) ^ (-(n & 1))
+    // Используем >> вместо >>> для веб-совместимости
+    // Это эквивалентно: если младший бит = 0, то (i >> 1)
+    // если младший бит = 1, то ~(i >> 1)
+    return (i >> 1) ^ (-(i & 1));
   }
 
   ///

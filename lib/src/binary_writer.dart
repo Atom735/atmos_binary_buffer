@@ -78,8 +78,11 @@ class BinaryWriter implements BytesBuilder {
   @override
   Uint8List takeBytes() {
     if (_length == 0) return _emptyList;
-    final buffer =
-        Uint8List.view(_buffer.buffer, _buffer.offsetInBytes, _length);
+    final buffer = Uint8List.view(
+      _buffer.buffer,
+      _buffer.offsetInBytes,
+      _length,
+    );
     clear();
     return buffer;
   }
@@ -88,7 +91,8 @@ class BinaryWriter implements BytesBuilder {
   Uint8List toBytes() {
     if (_length == 0) return _emptyList;
     return Uint8List.fromList(
-        Uint8List.view(_buffer.buffer, _buffer.offsetInBytes, _length));
+      Uint8List.view(_buffer.buffer, _buffer.offsetInBytes, _length),
+    );
   }
 
   ///
@@ -140,8 +144,11 @@ class BinaryWriter implements BytesBuilder {
   /// * [csz] - задаёт размер данных о длине (игнорируется если задана [size])
   /// * [size] - задаёт количество считываемых элементов, если известно
   void writeList<T>(
-      List<T> val, void Function(T val, int i, BinaryWriter writer) func,
-      {int csz = 0, int? size}) {
+    List<T> val,
+    void Function(T val, int i, BinaryWriter writer) func, {
+    int csz = 0,
+    int? size,
+  }) {
     final l = size ?? writeSize(val.length, csz);
     for (var i = 0; i < l; i++) {
       func(val[i], i, this);
@@ -249,64 +256,64 @@ class BinaryWriter implements BytesBuilder {
   @pragma('vm:prefer-inline')
   @pragma('dart2js:tryInline')
   void writeListUint64(List<int> val, {int csz = 0, int? size}) =>
-      writeList(val, _listWriteterUint64, csz: csz, size: size);
-  static void _listWriteterUint64(int val, int i, BinaryWriter writer) =>
+      writeList(val, _listWriterUint64, csz: csz, size: size);
+  static void _listWriterUint64(int val, int i, BinaryWriter writer) =>
       writer.writeUint64(val);
 
   ///
   @pragma('vm:prefer-inline')
   @pragma('dart2js:tryInline')
   void writeListUint32(List<int> val, {int csz = 0, int? size}) =>
-      writeList(val, _listWriteterUint32, csz: csz, size: size);
-  static void _listWriteterUint32(int val, int i, BinaryWriter writer) =>
+      writeList(val, _listWriterUint32, csz: csz, size: size);
+  static void _listWriterUint32(int val, int i, BinaryWriter writer) =>
       writer.writeUint32(val);
 
   ///
   @pragma('vm:prefer-inline')
   @pragma('dart2js:tryInline')
   void writeListUint16(List<int> val, {int csz = 0, int? size}) =>
-      writeList(val, _listWriteterUint16, csz: csz, size: size);
-  static void _listWriteterUint16(int val, int i, BinaryWriter writer) =>
+      writeList(val, _listWriterUint16, csz: csz, size: size);
+  static void _listWriterUint16(int val, int i, BinaryWriter writer) =>
       writer.writeUint16(val);
 
   ///
   @pragma('vm:prefer-inline')
   @pragma('dart2js:tryInline')
   void writeListInt64(List<int> val, {int csz = 0, int? size}) =>
-      writeList(val, _listWriteterInt64, csz: csz, size: size);
-  static void _listWriteterInt64(int val, int i, BinaryWriter writer) =>
+      writeList(val, _listWriterInt64, csz: csz, size: size);
+  static void _listWriterInt64(int val, int i, BinaryWriter writer) =>
       writer.writeInt64(val);
 
   ///
   @pragma('vm:prefer-inline')
   @pragma('dart2js:tryInline')
   void writeListInt32(List<int> val, {int csz = 0, int? size}) =>
-      writeList(val, _listWriteterInt32, csz: csz, size: size);
-  static void _listWriteterInt32(int val, int i, BinaryWriter writer) =>
+      writeList(val, _listWriterInt32, csz: csz, size: size);
+  static void _listWriterInt32(int val, int i, BinaryWriter writer) =>
       writer.writeInt32(val);
 
   ///
   @pragma('vm:prefer-inline')
   @pragma('dart2js:tryInline')
   void writeListInt16(List<int> val, {int csz = 0, int? size}) =>
-      writeList(val, _listWriteterInt16, csz: csz, size: size);
-  static void _listWriteterInt16(int val, int i, BinaryWriter writer) =>
+      writeList(val, _listWriterInt16, csz: csz, size: size);
+  static void _listWriterInt16(int val, int i, BinaryWriter writer) =>
       writer.writeInt16(val);
 
   ///
   @pragma('vm:prefer-inline')
   @pragma('dart2js:tryInline')
   void writeListFloat64(List<double> val, {int csz = 0, int? size}) =>
-      writeList(val, _listWriteterFloat64, csz: csz, size: size);
-  static void _listWriteterFloat64(double val, int i, BinaryWriter writer) =>
+      writeList(val, _listWriterFloat64, csz: csz, size: size);
+  static void _listWriterFloat64(double val, int i, BinaryWriter writer) =>
       writer.writeFloat64(val);
 
   ///
   @pragma('vm:prefer-inline')
   @pragma('dart2js:tryInline')
   void writeListFloat32(List<double> val, {int csz = 0, int? size}) =>
-      writeList(val, _listWriteterFloat32, csz: csz, size: size);
-  static void _listWriteterFloat32(double val, int i, BinaryWriter writer) =>
+      writeList(val, _listWriterFloat32, csz: csz, size: size);
+  static void _listWriterFloat32(double val, int i, BinaryWriter writer) =>
       writer.writeFloat32(val);
 
   ///
@@ -382,10 +389,7 @@ class BinaryWriter implements BytesBuilder {
   /// * [size] - задаёт количество записываемых байт, если известно
   @pragma('vm:prefer-inline')
   @pragma('dart2js:tryInline')
-  void writeStringW1(
-    String val, {
-    int? size,
-  }) =>
+  void writeStringW1(String val, {int? size}) =>
       writeStringW(val, size: size, csz: 1);
 
   /// Укороченная запись записи строки через [writeStringW], с максимальной
@@ -393,10 +397,7 @@ class BinaryWriter implements BytesBuilder {
   /// * [size] - задаёт количество записываемых байт, если известно
   @pragma('vm:prefer-inline')
   @pragma('dart2js:tryInline')
-  void writeStringW2(
-    String val, {
-    int? size,
-  }) =>
+  void writeStringW2(String val, {int? size}) =>
       writeStringW(val, size: size, csz: 2);
 
   /// Укороченная запись записи строки через [writeStringW], с максимальной
@@ -404,10 +405,7 @@ class BinaryWriter implements BytesBuilder {
   /// * [size] - задаёт количество записываемых байт, если известно
   @pragma('vm:prefer-inline')
   @pragma('dart2js:tryInline')
-  void writeStringW3(
-    String val, {
-    int? size,
-  }) =>
+  void writeStringW3(String val, {int? size}) =>
       writeStringW(val, size: size, csz: 3);
 
   /// Записывает широкую строку, в кодировке UTF-16
@@ -425,10 +423,7 @@ class BinaryWriter implements BytesBuilder {
   /// * [size] - задаёт количество записываемых байт, если известно
   @pragma('vm:prefer-inline')
   @pragma('dart2js:tryInline')
-  void writeStringWV1(
-    String val, {
-    int? size,
-  }) =>
+  void writeStringWV1(String val, {int? size}) =>
       writeStringWV(val, size: size, csz: 1);
 
   /// Укороченная запись записи строки через [writeStringWV], с максимальной
@@ -436,10 +431,7 @@ class BinaryWriter implements BytesBuilder {
   /// * [size] - задаёт количество записываемых байт, если известно
   @pragma('vm:prefer-inline')
   @pragma('dart2js:tryInline')
-  void writeStringWV2(
-    String val, {
-    int? size,
-  }) =>
+  void writeStringWV2(String val, {int? size}) =>
       writeStringWV(val, size: size, csz: 2);
 
   /// Укороченная запись записи строки через [writeStringWV], с максимальной
@@ -447,10 +439,7 @@ class BinaryWriter implements BytesBuilder {
   /// * [size] - задаёт количество записываемых байт, если известно
   @pragma('vm:prefer-inline')
   @pragma('dart2js:tryInline')
-  void writeStringWV3(
-    String val, {
-    int? size,
-  }) =>
+  void writeStringWV3(String val, {int? size}) =>
       writeStringWV(val, size: size, csz: 3);
 
   ///
@@ -514,7 +503,7 @@ class BinaryWriter implements BytesBuilder {
   /// * [csz]=3 - [writeUint32]
   /// * [csz]=4 - [writeUint64]
   ///
-  /// {@macro atmos.binnaryBuffer.packInt}
+  /// {@macro atmos.binaryBuffer.packInt}
   @pragma('vm:prefer-inline')
   @pragma('dart2js:tryInline')
   int writeSize(int count, [int csz = 0]) {
@@ -617,28 +606,27 @@ class BinaryWriter implements BytesBuilder {
   @pragma('vm:prefer-inline')
   @pragma('dart2js:tryInline')
   void writeListSize(List<int> val, {int csz = 0, int? size}) =>
-      writeList(val, _listWriteterSize, csz: csz, size: size);
-  static void _listWriteterSize(int val, int i, BinaryWriter writer) =>
+      writeList(val, _listWriterSize, csz: csz, size: size);
+  static void _listWriterSize(int val, int i, BinaryWriter writer) =>
       writer.writeSize(val);
 
   /// Записывает запакованное целое число
   ///
-  /// {@macro atmos.binnaryBuffer.packInt}
+  /// {@macro atmos.binaryBuffer.packInt}
   @pragma('vm:prefer-inline')
   @pragma('dart2js:tryInline')
   void writePackedInt(int value) {
-    if (value < 0) {
-      value ^= 0xffffffffffffffff;
-      writeSize((value << 1) | 1);
-    }
-    writeSize((value << 1) | 0);
+    // Zigzag encoding: (n << 1) ^ (n < 0 ? -1 : 0)
+    // Преобразует знаковые числа в беззнаковые для эффективной упаковки
+    final unsigned = (value << 1) ^ (value < 0 ? -1 : 0);
+    writeSize(unsigned);
   }
 
   @pragma('vm:prefer-inline')
   @pragma('dart2js:tryInline')
   void writeListPackedInt(List<int> val, {int csz = 0, int? size}) =>
-      writeList(val, _listWriteterPackedInt, csz: csz, size: size);
-  static void _listWriteterPackedInt(int val, int i, BinaryWriter writer) =>
+      writeList(val, _listWriterPackedInt, csz: csz, size: size);
+  static void _listWriterPackedInt(int val, int i, BinaryWriter writer) =>
       writer.writePackedInt(val);
 
   /// Выравнивание указателя чтения до кратного значения байт
