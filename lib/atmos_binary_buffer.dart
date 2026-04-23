@@ -197,6 +197,38 @@
 
 library atmos_binary_buffer;
 
+import 'dart:typed_data';
+
+import 'src/binary_reader.dart';
+import 'src/binary_writer.dart';
+
+export 'src/bfloat16.dart';
 export 'src/binary_reader.dart';
 export 'src/binary_writer.dart';
+export 'src/float16.dart';
+export 'src/float32.dart';
 export 'src/utils.dart';
+
+extension AtmosBinaryBufferXUint8List on TypedData {
+  /// Creates [BinaryReader] over an existing [TypedData] preserving its visible byte range.
+  ///
+  /// Создаёт [BinaryReader] поверх существующего [TypedData] с сохранением видимого диапазона байтов.
+  BinaryReader get reader => BinaryReader.fromTypedData(this);
+
+  /// Creates [BinaryWriter] over an existing [TypedData].
+  ///
+  /// Создаёт [BinaryWriter] поверх существующего [TypedData].
+  BinaryWriter get writer => BinaryWriter.withTypedData(this);
+}
+
+extension AtmosBinaryBufferXByteBuffer on ByteBuffer {
+  /// Creates [BinaryReader] over an existing [ByteBuffer].
+  ///
+  /// Создаёт [BinaryReader] поверх существующего [ByteBuffer].
+  BinaryReader get reader => BinaryReader.fromByteBuffer(this);
+
+  /// Creates [BinaryWriter] over an existing [ByteBuffer].
+  ///
+  /// Создаёт [BinaryWriter] поверх существующего [ByteBuffer].
+  BinaryWriter get writer => BinaryWriter.withByteBuffer(this);
+}

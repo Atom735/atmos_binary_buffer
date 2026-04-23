@@ -1,4 +1,10 @@
-/// Rounds numbers <= 2^32 up to the nearest power of 2.
+/// ### Round up to power of two
+///
+/// Returns the smallest power of two that is greater than or equal to
+/// [x]. Works for positive integers in the `<= 2^32` range.
+///
+/// Возвращает наименьшую степень двойки, которая больше либо равна [x].
+/// Работает для положительных целых чисел в диапазоне `<= 2^32`.
 @pragma('vm:prefer-inline')
 @pragma('dart2js:tryInline')
 int pow2roundup(int x) {

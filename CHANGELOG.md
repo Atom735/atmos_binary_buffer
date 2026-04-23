@@ -1,5 +1,21 @@
 # Changes
 
+## 2.0.0
+
+### EN
+
+- add IEEE 754 `float16` and `bfloat16` conversion utilities, plus `float32` bit reinterpretation helpers
+- extend `BinaryReader`/`BinaryWriter` with `read/writeFloat16`, `read/writeBFloat16`, list methods, and short aliases (`rI/rU/rF*`, `wI/wU/wF*`)
+- add `BinaryReader` constructors for `TypedData`, `ByteData`, and `ByteBuffer`
+- reorganize and complete bilingual DartDoc (EN first, RU second), clean up templates/macros, and refresh public exports/docs
+
+### RU
+
+- добавлены утилиты конвертации IEEE 754 `float16` и `bfloat16`, а также хелперы реинтерпретации битов `float32`
+- расширены `BinaryReader`/`BinaryWriter`: `read/writeFloat16`, `read/writeBFloat16`, методы для списков и короткие алиасы (`rI/rU/rF*`, `wI/wU/wF*`)
+- добавлены конструкторы `BinaryReader` для `TypedData`, `ByteData` и `ByteBuffer`
+- переработан и дополнен двуязычный DartDoc (сначала EN, затем RU), очищены templates/macros и обновлены публичные экспорты/документация
+
 ## 1.0.1
 
 - update documentation: split into ENG and RU sections (ENG on top)
